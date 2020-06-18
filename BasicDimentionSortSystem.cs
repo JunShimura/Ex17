@@ -15,28 +15,48 @@ namespace EX17
     class Program
     {
         // 環境定義
-        static readonly int dimSize = 1000;   //配列の大きさ 
+        static readonly int dimSize = 10000;   //配列の大きさ 
 
         static void Main(string[] args)
         {
-            int[] n = new int[dimSize];
+            int[] n1 = new int[dimSize];
+            int[] n2 = new int[dimSize];
+            int[] n3 = new int[dimSize];
+            int[] n4 = new int[dimSize];
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
             // 配列をランダムで埋める
-            RandomizeArray(n);
-            //DisplayArray(n);
+            RandomizeArray(n1);
+            Array.Copy(n1, n2,n1.Length);
+            Array.Copy(n1, n3, n1.Length);
+            Array.Copy(n1, n4, n1.Length);
+            // Array.Sort
             sw.Start();
-            Array.Sort(n, new ReverserClass());
+            Array.Sort(n1, new ReverserClass());
             sw.Stop();
-            Console.WriteLine("かかった時間：{0}",sw.Elapsed);
-            //DisplayArray(n);
-
-            RandomizeArray(n);
-            //DisplayArray(n);
+            Console.WriteLine("Array.Sortでかかった時間：{0}",sw.Elapsed);
             sw.Reset();
+
+            // Array.Sort,Reverse
             sw.Start();
-            SelectSort(n);
+            Array.Sort(n2);
+            Array.Reverse(n2);
             sw.Stop();
-            Console.WriteLine("かかった時間：{0}", sw.Elapsed);
+            Console.WriteLine("Array.Sort,Reverseでかかった時間：{0}", sw.Elapsed);
+            sw.Reset();
+
+            // Select
+            sw.Start();
+            SelectSort(n3);
+            sw.Stop();
+            Console.WriteLine("Selectでかかった時間：{0}", sw.Elapsed);
+
+            // bubble
+            sw.Start();
+            BubbleSort(n4);
+            sw.Stop();
+            Console.WriteLine("Bubbleかかった時間：{0}", sw.Elapsed);
+            //DisplayArray(n4);
+
         }
         
         static void SelectSort(int[] a)
@@ -55,7 +75,29 @@ namespace EX17
             }
         }
 
-        
+        static void BubbleSort(int[] a)
+        {
+            bool changed;
+            for (int i = a.Length-1; i >0; i--)
+            {
+                changed = false;
+                for (int j = 0; j < i; j++)
+                {
+                    if (a[j] < a[j+1])
+                    {   //　入れ替え
+                        int t = a[j];
+                        a[j] = a[j+1];
+                        a[j+1] = t;
+                        changed = true;
+                    }
+                }
+                if (!changed)
+                {
+                    break;
+                }
+            }
+        }
+
 
         static void RandomizeArray(int[] a)
         {
