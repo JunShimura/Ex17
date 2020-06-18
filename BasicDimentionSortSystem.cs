@@ -15,17 +15,47 @@ namespace EX17
     class Program
     {
         // 環境定義
-        static readonly int dimSize = 10;   //配列の大きさ 
+        static readonly int dimSize = 1000;   //配列の大きさ 
 
         static void Main(string[] args)
         {
-            int[] n = new int[10000];
-            n[0] = 0;
+            int[] n = new int[dimSize];
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            // 配列をランダムで埋める
             RandomizeArray(n);
-            DisplayArray(n);
+            //DisplayArray(n);
+            sw.Start();
             Array.Sort(n, new ReverserClass());
-            DisplayArray(n);
+            sw.Stop();
+            Console.WriteLine("かかった時間：{0}",sw.Elapsed);
+            //DisplayArray(n);
+
+            RandomizeArray(n);
+            //DisplayArray(n);
+            sw.Reset();
+            sw.Start();
+            SelectSort(n);
+            sw.Stop();
+            Console.WriteLine("かかった時間：{0}", sw.Elapsed);
         }
+        
+        static void SelectSort(int[] a)
+        {
+            for (int i = 0; i < a.Length - 1; i++)
+            { //最大値をn[i]にする
+                for (int j = i + 1; j < a.Length; j++)
+                {
+                    if (a[i] < a[j])
+                    {   //　最大値と入れ替え
+                        int t = a[i];
+                        a[i] = a[j];
+                        a[j] = t;
+                    }
+                }
+            }
+        }
+
+        
 
         static void RandomizeArray(int[] a)
         {
@@ -44,6 +74,5 @@ namespace EX17
             }
             return;
         }
-
     }
 }
