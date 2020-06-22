@@ -64,12 +64,11 @@ namespace EX17
             //DisplayArray(n4);
 
             // List.Sort
-
+            sw.Start();
             var list = new List<int>();
             list.AddRange(n5);
-            sw.Start();
             list.Sort((a, b) => b - a);
-            //n5 = list.ToArray();
+            n5 = list.ToArray();
             sw.Stop();
             Console.WriteLine("Listでかかった時間：{0}", sw.Elapsed);
 
