@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace EX17
 {
@@ -15,7 +16,7 @@ namespace EX17
     class Program
     {
         // 環境定義
-        static readonly int dimSize = 10000;   //配列の大きさ 
+        static readonly int dimSize = 50000;   //配列の大きさ 
 
         static void Main(string[] args)
         {
@@ -23,12 +24,15 @@ namespace EX17
             int[] n2 = new int[dimSize];
             int[] n3 = new int[dimSize];
             int[] n4 = new int[dimSize];
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+            int[] n5 = new int[dimSize];
+
+            Stopwatch sw = new Stopwatch();
             // 配列をランダムで埋める
             RandomizeArray(n1);
             Array.Copy(n1, n2,n1.Length);
             Array.Copy(n1, n3, n1.Length);
             Array.Copy(n1, n4, n1.Length);
+            Array.Copy(n1, n5, n1.Length);
             // Array.Sort
             sw.Start();
             Array.Sort(n1, new ReverserClass());
@@ -49,13 +53,25 @@ namespace EX17
             SelectSort(n3);
             sw.Stop();
             Console.WriteLine("Selectでかかった時間：{0}", sw.Elapsed);
+            sw.Reset();
 
             // bubble
             sw.Start();
             BubbleSort(n4);
             sw.Stop();
-            Console.WriteLine("Bubbleかかった時間：{0}", sw.Elapsed);
+            Console.WriteLine("Bubbleでかかった時間：{0}", sw.Elapsed);
+            sw.Reset();
             //DisplayArray(n4);
+
+            // List.Sort
+
+            var list = new List<int>();
+            list.AddRange(n5);
+            sw.Start();
+            list.Sort((a, b) => b - a);
+            //n5 = list.ToArray();
+            sw.Stop();
+            Console.WriteLine("Listでかかった時間：{0}", sw.Elapsed);
 
         }
         
